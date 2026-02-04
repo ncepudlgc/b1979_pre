@@ -2,10 +2,8 @@
 
 # Notes for Current Build
 
-- The menu system has been fully implemented and wired up.
-- Players can now start the game from the Menu scene using the Start button.
-- The pause menu in the Game scene is fully functional with Resume, Restart, and Quit buttons.
-- The game pauses when the menu button is clicked and resumes when the Resume button is clicked.
+- The current build adds an overlay menu for the Game Scene and a Menu Scene with a start game button.
+- The intention of the current prompt is to wire the workflow for handling the main Menu scene and the game (pause) menu in the Game scene so the player can successfully navigate the menus to start the game, pause the game and interact with the game menu to resume the game, restart the game, or quit to the main menu.
 
 # Menu Architecture:
 
@@ -30,12 +28,8 @@ Bombing Run is a 3D arcade-style airplane game where players control an airplane
 
 ## Project Structure
 - **Assets/Scenes/**: Contains all game scenes
-  - **Menu.unity**: Main menu scene (Build Index 1)
-  - **GameScene.unity**: Game scene (Build Index 0)
-- **Assets/MainMenu.cs**: Handles main menu functionality and scene navigation
-- **Assets/GameMenu.cs**: Manages pause menu (Resume, Restart, Quit buttons)
-- **Assets/GameManager.cs**: Manages game state, enemy spawning, scoring, game progression, and pause/resume functionality
 - **Assets/PlaneController.cs**: Handles player airplane movement, shooting, bombing, boost/brake mechanics, and camera controls
+- **Assets/GameManager.cs**: Manages game state, enemy spawning, scoring, and game progression
 - **Assets/Turret.cs**: Controls ground turrets that engage the player
 - **Assets/Bogie.cs**: Controls enemy aircraft with dynamic flight patterns
 - **Assets/Bunker.cs**: Manages destructible ground bunkers
@@ -62,16 +56,7 @@ Bombing Run is a 3D arcade-style airplane game where players control an airplane
 - **Bomb Button**: Drop bombs toward the GroundReticle position
 - **Boost Button**: Temporarily increase the plane's speed (hold)
 - **Brake Button**: Temporarily decrease the plane's speed (hold)
-- **Menu Button**: Pause the game and show the pause menu
 - The plane maintains forward momentum while allowing directional control
-
-## Menu System
-- **Main Menu**: 
-  - Start Button: Loads the Game scene to begin playing
-- **Pause Menu** (accessible during gameplay):
-  - Resume Button: Resumes the game and hides the pause menu
-  - Restart Button: Restarts the game by reloading the Game scene
-  - Quit Button: Returns to the Main Menu scene
 
 
 ## Gameplay Features

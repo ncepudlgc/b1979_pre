@@ -3,7 +3,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEngine.UI;  // Add this for Button component
 using UnityEngine.UIElements;  // Add this at the top for TextMeshProUGUI
 
 
@@ -28,8 +27,6 @@ public class GameManager : MonoBehaviour
     private TextMeshProUGUI healthText;
     private TextMeshProUGUI bombText;
     private TextMeshProUGUI scoreText;
-    private bool isPaused = false;
-    private GameMenu gameMenu;
     // Spawn area settings - now based on ground plane bounds
     private float groundSpawnMinZ;
     private float groundSpawnMaxZ;
@@ -164,37 +161,6 @@ public class GameManager : MonoBehaviour
         if (bombDisplay != null) bombText = bombDisplay.GetComponent<TextMeshProUGUI>();
         if (scoreDisplay != null) scoreText = scoreDisplay.GetComponent<TextMeshProUGUI>();
         
-        // Get reference to GameMenu component
-        gameMenu = GetComponent<GameMenu>();
-        if (gameMenu == null)
-        {
-            Debug.LogError("GameMenu component not found on GameManager GameObject!");
-        }
-        
-        // Wire up menu button click handler
-        if (menuButton != null)
-        {
-            Button button = menuButton.GetComponent<Button>();
-            if (button != null)
-            {
-                button.onClick.AddListener(TogglePauseMenu);
-            }
-            else
-            {
-                Debug.LogError("Menu button GameObject does not have a Button component!");
-            }
-        }
-        else
-        {
-            Debug.LogError("Menu button GameObject is not assigned in GameManager!");
-        }
-        
-        // Hide the menu panel initially
-        if (menuPanel != null)
-        {
-            menuPanel.SetActive(false);
-        }
-        
         // Initial UI update
         UpdateDisplays();
     }
@@ -202,10 +168,6 @@ public class GameManager : MonoBehaviour
     // Called every frame to update game state
     void Update()
     {
-        // Don't update game logic when paused
-        if (isPaused)
-            return;
-            
         if (playerPlane == null)
             return;
 
@@ -563,48 +525,5 @@ public class GameManager : MonoBehaviour
     {
         lives = 0; // This will trigger the game over logic in Update
         Debug.Log("Game Over!");
-    }
-    
-    /// <summary>
-    /// Toggles the pause menu visibility and game pause state
-    /// </summary>
-    public void TogglePauseMenu()
-    {
-        if (isPaused)
-        {
-            ResumeGame();
-        }
-        else
-        {
-            PauseGame();
-        }
-    }
-    
-    /// <summary>
-    /// Pauses the game and shows the pause menu
-    /// </summary>
-    public void PauseGame()
-    {
-        isPaused = true;
-        Time.timeScale = 0f; // Pause game time
-        
-        if (menuPanel != null)
-        {
-            menuPanel.SetActive(true);
-        }
-    }
-    
-    /// <summary>
-    /// Resumes the game and hides the pause menu
-    /// </summary>
-    public void ResumeGame()
-    {
-        isPaused = false;
-        Time.timeScale = 1f; // Resume game time
-        
-        if (menuPanel != null)
-        {
-            menuPanel.SetActive(false);
-        }
     }
 }
